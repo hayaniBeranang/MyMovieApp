@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MyMovie App</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<h1>🎬 MyMovie Application</h1>
+
+<nav>
+    <a href="home.html">Home</a>
+    <a href="watchlist.html">Watchlist</a>
+</nav>
+
+<hr>
+
+<h2>Movie Search</h2>
+
+<input
+    type="text"
+    id="movieName"
+    placeholder="Enter movie name">
+
+<button id="searchBtn">
+    Search
+</button>
+
+<div id="results"></div>
+
+<hr>
+
+<h2>Movie Recommendation</h2>
+
+<select id="genre">
+
+    <option>Action</option>
+
+    <option>Comedy</option>
+
+    <option>Animation</option>
+
+    <option>Horror</option>
+
+    <option>Sci-Fi</option>
+
+</select>
+
+<button id="recommendBtn">
+    Recommend
+</button>
+
+<div id="recommendation"></div>
+
+<hr>
+
+<h2>Watch Time Calculator</h2>
+
+<input
+    type="number"
+    id="duration"
+    placeholder="Movie Duration">
+
+<input
+    type="number"
+    id="count"
+    placeholder="Number of Movies">
+
+<button id="calculateBtn">
+    Calculate
+</button>
+
+<div id="calcResult"></div>
+
+<script src="../js/home.js"></script>
+
+</body>
+</html>
