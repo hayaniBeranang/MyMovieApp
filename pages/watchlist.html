@@ -1,44 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Watchlist</title>
+    <title>My Watchlist</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
 
-<h1>My Watchlist</h1>
+<nav class="navbar">
+    <h1 class="logo">🎬 MyMovie</h1>
 
-<nav>
-    <a href="home.html">Home</a>
-    <a href="watchlist.html">Watchlist</a>
+    <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="watchlist.html">Watchlist</a>
+    </div>
 </nav>
 
-<hr>
+<div class="container">
 
-<input
-id="title"
-placeholder="Movie Title">
+    <h2>📌 My Watchlist</h2>
 
-<input
-id="genreInput"
-placeholder="Genre">
+    <div id="watchlist"></div>
 
-<input
-id="rating"
-placeholder="Rating">
-
-<input
-id="note"
-placeholder="Note">
-
-<button id="addBtn">
-Add Movie
-</button>
-
-<hr>
-
-<div id="movieList"></div>
+</div>
 
 <script src="../js/watchlist.js"></script>
 
