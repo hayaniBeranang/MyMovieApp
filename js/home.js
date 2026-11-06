@@ -1,128 +1,187 @@
-const apiKey = "YOUR_API_KEY";
+const API_KEY = "175387e2";
 
-document
-.getElementById("searchBtn")
-.addEventListener("click", searchMovie);
+const searchBtn = document.getElementById("searchBtn");
 
-document
-.getElementById("recommendBtn")
-.addEventListener("click", recommendMovie);
-
-document
-.getElementById("calculateBtn")
-.addEventListener("click", calculateTime);
+searchBtn.addEventListener("click", searchMovie);
 
 async function searchMovie() {
 
     const movie =
-    document.getElementById("movieName").value;
+    document.getElementById("movieInput").value;
 
-    if(movie === "")
-    {
-        alert("Please enter movie name");
+    if (movie === "") {
+        alert("Enter movie title");
         return;
     }
 
     try {
 
-        const response =
-        await fetch(
-        `https://www.omdbapi.com/?apikey=${apiKey}&s=${movie}`
+        const response = await fetch(
+            `https://www.omdbapi.com/?apikey=${API_KEY}&s=${movie}`
         );
 
-        const data =
-        await response.json();
+        const data = await response.json();
 
-        let output = "";
+        if (data.Response === "False") {
 
-        if(data.Response === "False")
-        {
-            output = "Movie not found";
-        }
-        else
-        {
-            data.Search.forEach(movie => {
+            document.getElementById("result").innerHTML =
+            "<p>Movie not found</p>";
 
-                output +=
-                `
-                <div class="card">
-                    <img src="${movie.Poster}">
-                    <h3>${movie.Title}</h3>
-                    <p>Year: ${movie.Year}</p>
-                    <p>Type: ${movie.Type}</p>
-                    <p>ID: ${movie.imdbID}</p>
-                </div>
-                `;
-            });
+            return;
         }
 
-        document.getElementById("results")
-        .innerHTML = output;
+        let html = '<div class="movie-grid">';
+
+        for (const movie of data.Search) {
+
+            const details = await fetch(
+                `https://www.omdbapi.com/?apikey=${API_KEY}&i=${movie.imdbID}`
+            );
+
+            const fullMovie = await details.json();
+
+            html += `
+            <div class="movie-card">
+
+                <img src="${fullMovie.Poster}" alt="${fullMovie.Title}">
+
+                <h3>${fullMovie.Title}</h3>
+
+                <p><strong>Year:</strong> ${fullMovie.Year}</p>
+
+                <p><strong>Genre:</strong> ${fullMovie.Genre}</p>
+
+                <p><strong>Runtime:</strong> ${fullMovie.Runtime}</p>
+
+                <p><strong>IMDb:</strong> ${fullMovie.imdbRating}</p>
+
+                <p>${fullMovie.Plot}</p>
+
+                <button
+                    class="btn"
+                    onclick="saveMovie('${fullMovie.Title}','${fullMovie.Poster}')">
+                    Add To Watchlist
+                </button>
+
+            </div>
+            `;
+        }
+
+        html += '</div>';
+
+        document.getElementById("result").innerHTML = html;
 
     }
-    catch(error)
-    {
-        document.getElementById("results")
-        .innerHTML =
-        "API Error";
+
+    catch (error) {
+
+        document.getElementById("result").innerHTML =
+        "<p>API Error</p>";
+
+        console.log(error);
     }
 }
 
-function recommendMovie()
-{
+async function recommendMovie(){
+
     const genre =
     document.getElementById("genre").value;
 
-    let recommendation = "";
+    let movie = "";
 
-    if(genre === "Action")
-    {
-        recommendation =
-        "John Wick";
+    if(genre === "Action"){
+        movie = "John Wick";
     }
-    else if(genre === "Comedy")
-    {
-        recommendation =
-        "The Mask";
+    else if(genre === "Comedy"){
+        movie = "Free Guy";
     }
-    else if(genre === "Animation")
-    {
-        recommendation =
-        "Toy Story";
+    else if(genre === "Horror"){
+        movie = "The Conjuring";
     }
-    else if(genre === "Horror")
-    {
-        recommendation =
-        "The Conjuring";
-    }
-    else if(genre === "Sci-Fi")
-    {
-        recommendation =
-        "Interstellar";
+    else if(genre === "Animation"){
+        movie = "Inside Out";
     }
 
-    document
-    .getElementById("recommendation")
-    .innerHTML =
-    `<h3>Recommended Movie: ${recommendation}</h3>`;
+    const response = await fetch(
+        `https://www.omdbapi.com/?apikey=${API_KEY}&t=${movie}`
+    );
+
+    const data = await response.json();
+
+    document.getElementById("recommendation").innerHTML = `
+
+        <div class="movie-card">
+
+            <img src="${data.Poster}">
+
+            <h3>${data.Title}</h3>
+
+            <p><strong>Genre:</strong> ${data.Genre}</p>
+
+            <p><strong>Runtime:</strong> ${data.Runtime}</p>
+
+            <p><strong>IMDb:</strong> ${data.imdbRating}</p>
+
+            <p>${data.Plot}</p>
+
+        </div>
+
+    `;
 }
 
-function calculateTime()
-{
-    const duration =
-    Number(document.getElementById("duration").value);
+function calculateTime() {
 
-    const count =
-    Number(document.getElementById("count").value);
+    const runtime = parseInt(
+        document.getElementById("runtime").value
+    );
 
-    const total =
-    duration * count;
+    const quantity = parseInt(
+        document.getElementById("quantity").value
+    );
 
-    document
-    .getElementById("calcResult")
-    .innerHTML =
-    `
-    <h3>Total Time: ${total} minutes</h3>
-    <h3>${(total/60).toFixed(2)} hours</h3>
-    `;
+    if (isNaN(runtime) || isNaN(quantity)) {
+
+        alert("Enter valid numbers");
+        return;
+    }
+
+    const totalMinutes = runtime * quantity;
+
+    const hours =
+    (totalMinutes / 60).toFixed(2);
+
+    document.getElementById("totalTime").innerText =
+    `${totalMinutes} Minutes (${hours} Hours)`;
+}
+
+function saveMovie(title, poster) {
+
+    let watchlist =
+    JSON.parse(
+        localStorage.getItem("watchlist")
+    ) || [];
+
+    const movieExists =
+    watchlist.some(
+        movie => movie.name === title
+    );
+
+    if(movieExists){
+        alert("Movie already in watchlist!");
+        return;
+    }
+
+    watchlist.push({
+        name: title,
+        poster: poster,
+        status: "Not Watched",
+        dateAdded: new Date().toLocaleDateString()
+    });
+
+    localStorage.setItem(
+        "watchlist",
+        JSON.stringify(watchlist)
+    );
+
+    alert("Added to Watchlist");
 }
