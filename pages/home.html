@@ -1,77 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MyMovie App</title>
+    <title>MyMovie</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
 
-<h1>🎬 MyMovie Application</h1>
+<nav class="navbar">
+    <h1 class="logo">MyMovie</h1>
 
-<nav>
-    <a href="home.html">Home</a>
-    <a href="watchlist.html">Watchlist</a>
+    <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="watchlist.html">Watchlist</a>
+    </div>
 </nav>
 
-<hr>
+<section class="hero">
+    <h1>Discover Amazing Movies</h1>
+    <p>Search, Watch and Save Your Favorites</p>
 
-<h2>Movie Search</h2>
+    <div class="search-box">
+        <input
+            type="text"
+            id="movieInput"
+            placeholder="Search movie...">
 
-<input
-    type="text"
-    id="movieName"
-    placeholder="Enter movie name">
+        <button id="searchBtn" class="btn">
+            Search
+        </button>
+    </div>
+</section>
 
-<button id="searchBtn">
-    Search
-</button>
+<div class="container">
 
-<div id="results"></div>
+    <div id="result"></div>
 
-<hr>
+    <section class="card-section">
+        <h2>Movie Recommendation</h2>
 
-<h2>Movie Recommendation</h2>
+        <select id="genre">
+            <option>Action</option>
+            <option>Comedy</option>
+            <option>Horror</option>
+            <option>Animation</option>
+        </select>
 
-<select id="genre">
+        <button
+            class="btn"
+            onclick="recommendMovie()">
+            Recommend
+        </button>
 
-    <option>Action</option>
+        <p id="recommendation"></p>
+    </section>
 
-    <option>Comedy</option>
+    <section class="card-section">
+        <h2>Watch Time Calculator</h2>
 
-    <option>Animation</option>
+        <input
+            type="number"
+            id="runtime"
+            placeholder="Movie runtime (minutes)">
 
-    <option>Horror</option>
+        <input
+            type="number"
+            id="quantity"
+            placeholder="Number of movies">
 
-    <option>Sci-Fi</option>
+        <button
+            class="btn"
+            onclick="calculateTime()">
+            Calculate
+        </button>
 
-</select>
+        <p id="totalTime"></p>
+    </section>
 
-<button id="recommendBtn">
-    Recommend
-</button>
-
-<div id="recommendation"></div>
-
-<hr>
-
-<h2>Watch Time Calculator</h2>
-
-<input
-    type="number"
-    id="duration"
-    placeholder="Movie Duration">
-
-<input
-    type="number"
-    id="count"
-    placeholder="Number of Movies">
-
-<button id="calculateBtn">
-    Calculate
-</button>
-
-<div id="calcResult"></div>
+</div>
 
 <script src="../js/home.js"></script>
 
