@@ -1,84 +1,99 @@
-let movies =
-JSON.parse(
-localStorage.getItem("watchlist")
-) || [];
-
 displayMovies();
 
-document
-.getElementById("addBtn")
-.addEventListener("click", addMovie);
+function displayMovies() {
 
-function addMovie()
-{
-    const movie =
-    {
-        title:
-        document.getElementById("title").value,
+    const watchlist =
+        JSON.parse(
+            localStorage.getItem("watchlist")
+        ) || [];
 
-        genre:
-        document.getElementById("genreInput").value,
+    const container =
+        document.getElementById("watchlist");
 
-        rating:
-        document.getElementById("rating").value,
+    if (watchlist.length === 0) {
 
-        note:
-        document.getElementById("note").value
-    };
+        container.innerHTML =
+            "<p>No movies in watchlist.</p>";
 
-    movies.push(movie);
+        return;
+    }
 
-    saveMovies();
+    let html = '<div class="movie-grid">';
 
-    displayMovies();
-}
+    watchlist.forEach((movie, index) => {
 
-function saveMovies()
-{
-    localStorage.setItem(
-    "watchlist",
-    JSON.stringify(movies)
-    );
-}
+        html += `
+        <div class="movie-card">
 
-function deleteMovie(index)
-{
-    movies.splice(index,1);
+            <img src="${movie.poster}" alt="${movie.name}">
 
-    saveMovies();
+            <h3>${movie.name}</h3>
 
-    displayMovies();
-}
+            <p class="date-added">
+                Added: ${movie.dateAdded}
+            </p>
 
-function displayMovies()
-{
-    let output = "";
-
-    movies.forEach((movie,index)=>{
-
-        output +=
-        `
-        <div class="card">
-
-            <h3>${movie.title}</h3>
-
-            <p>${movie.genre}</p>
-
-            <p>${movie.rating}</p>
-
-            <p>${movie.note}</p>
+            <p class="movie-status">
+                Status: ${movie.status || "Not Watched"}
+            </p>
 
             <button
-            onclick="deleteMovie(${index})">
-            Delete
+                class="btn watched-btn"
+                onclick="markWatched(${index})">
+
+                ${movie.status === "Watched"
+                    ? "Watched"
+                    : "Mark Watched"}
+
+            </button>
+
+            <button
+                class="btn delete-btn"
+                onclick="deleteMovie(${index})">
+
+                Remove
+
             </button>
 
         </div>
         `;
     });
 
-    document
-    .getElementById("movieList")
-    .innerHTML =
-    output;
+    html += '</div>';
+
+    container.innerHTML = html;
+}
+
+function markWatched(index) {
+
+    let watchlist =
+        JSON.parse(
+            localStorage.getItem("watchlist")
+        ) || [];
+
+    watchlist[index].status = "Watched";
+
+    localStorage.setItem(
+        "watchlist",
+        JSON.stringify(watchlist)
+    );
+
+    displayMovies();
+}
+
+function deleteMovie(index) {
+
+    let watchlist =
+        JSON.parse(
+            localStorage.getItem("watchlist")
+        ) || [];
+
+    watchlist.splice(index, 1);
+
+    localStorage.setItem(
+        "watchlist",
+        JSON.stringify(watchlist)
+    );
+
+    displayMovies();
 }
