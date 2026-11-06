@@ -1,38 +1,216 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
 body{
-    font-family: Arial;
-    background:#141414;
+    background:#0f172a;
     color:white;
-    margin:20px;
 }
 
-nav a{
-    color:#ff4444;
-    margin-right:15px;
+/* NAVBAR */
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+    background:#111827;
+    box-shadow:0 2px 15px rgba(0,0,0,.2);
+}
+
+.logo{
+    color:#10b981;
+    font-size:32px;
+    font-weight:700;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+}
+
+.nav-links a{
+    color:white;
     text-decoration:none;
-    font-weight:bold;
+    font-size:18px;
+    transition:.3s;
 }
 
-input,
-select,
-button{
-    padding:10px;
-    margin:5px;
+.nav-links a:hover{
+    color:#10b981;
 }
 
-button{
-    background:red;
+/* HERO */
+
+.hero{
+    text-align:center;
+    padding:80px 20px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #111827,
+        #1e293b
+    );
+}
+.hero h1{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:20px;
+    color:#e2e8f0;
+    margin-bottom:30px;
+}
+
+/* SEARCH */
+
+.search-box{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+}
+
+.search-box input{
+    width:450px;
+    padding:15px 20px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+}
+
+.search-box input:focus{
+    outline:none;
+}
+
+/* BUTTONS */
+
+.btn{
+    background:#10b981;
     color:white;
     border:none;
+    padding:15px 22px;
+    border-radius:12px;
     cursor:pointer;
+    font-weight:600;
+    transition:.3s;
 }
 
-.card{
-    background:#222;
-    padding:15px;
-    margin:10px 0;
+.btn:hover{
+    background:#059669;
+}
+
+/* CONTAINER */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:40px;
+}
+
+/* CARD SECTION */
+
+.card-section{
+    background:#1e293b;
+    border-radius:16px;
+    padding:30px;
+    margin-bottom:25px;
+}
+
+.card-section h2{
+    color:#10b981;
+    margin-bottom:20px;
+}
+
+.card-section input,
+.card-section select{
+    padding:12px;
+    border:none;
     border-radius:10px;
+    margin-right:10px;
 }
 
-img{
-    width:150px;
+#recommendation,
+#totalTime{
+    margin-top:15px;
+}
+
+/* MOVIE GRID */
+
+.movie-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+    margin-top:20px;
+}
+
+/* MOVIE CARD */
+
+.movie-card{
+    background:#1e293b;
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+    transition:.3s;
+}
+
+.movie-card:hover{
+    transform:translateY(-5px);
+}
+
+.movie-card img{
+    width:220px;
+    height:320px;
+    object-fit:cover;
+    border-radius:15px;
+    margin-bottom:15px;
+}
+
+.movie-card h3{
+    margin-bottom:10px;
+    font-size:24px;
+}
+
+.movie-card p{
+    color:#cbd5e1;
+    margin-bottom:10px;
+}
+
+.movie-card button{
+    width:100%;
+    margin-top:10px;
+}
+
+/* STATUS DATE */
+
+.date-added{
+    color:#94a3b8;
+    font-size:14px;
+    margin-bottom:12px;
+}
+
+/* WATCHED */
+
+.watched-btn{
+    background:#22c55e;
+}
+
+.watched-btn:hover{
+    background:#16a34a;
+}
+
+/* DELETE */
+
+.delete-btn{
+    background:#ef4444;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
 }
