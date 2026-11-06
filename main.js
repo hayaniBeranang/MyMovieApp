@@ -7,6 +7,7 @@ function createWindow() {
   });
 
   win.loadFile("pages/home.html");
+
 }
 
 app.whenReady().then(() => {
